@@ -9,9 +9,22 @@ use Illuminate\Http\Request;
 class CarService
 {
 
-    public function showCars()
+    public function showCars(Request $request)
     {
-        $cars = Car::paginate(5);
+
+        $brand = $request->input('brand');
+        $model = $request->input('model');
+
+        if ($brand && $model) {
+            $cars = Car::scopeSearchByBrandAndModel($brand, $model);
+        } else if ($brand) {
+            $cars = Car::scopeSearchByBrand($brand);
+        } else if ($model) {
+            $cars = Car::scopeSearchByModel($model);
+        } else {
+            $cars = Car::paginate(5);
+        }
+
         return $cars;
     }
 
