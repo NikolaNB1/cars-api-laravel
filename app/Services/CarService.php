@@ -11,7 +11,7 @@ class CarService
 
     public function showCars()
     {
-        $cars = Car::get();
+        $cars = Car::paginate(5);
         return $cars;
     }
 
