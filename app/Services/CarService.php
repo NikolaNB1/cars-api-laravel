@@ -17,6 +17,16 @@ class CarService
 
     public function postCar(Request $request)
     {
+        $request->validate([
+            'brand' => 'required|min:2',
+            'model' => 'required|min:2',
+            'year' => 'required',
+            'max_speed' => 'between:20,300',
+            'is_automatic' => 'required',
+            'engine' => 'required',
+            'number_of_doors' => 'required|between:2,5'
+        ]);
+
         $car = new Car();
 
         $car->brand = $request->brand;
@@ -39,6 +49,18 @@ class CarService
 
     public function editCar(Request $request, string $id)
     {
+
+        $request->validate([
+            'brand' => 'required|min:2',
+            'model' => 'required|min:2',
+            'year' => 'required',
+            'max_speed' => 'between:20,300',
+            'is_automatic' => 'required',
+            'engine' => 'required',
+            'number_of_doors' => 'required|between:2,5'
+        ]);
+
+
         $car = Car::find($id);
         $car->brand = $request->brand;
         $car->model = $request->model;
